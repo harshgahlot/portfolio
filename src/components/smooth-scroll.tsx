@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
-import { ReactLenis, type LenisRef } from "lenis/react";
+import { ReactLenis, useLenis, type LenisRef } from "lenis/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
@@ -27,6 +30,12 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     getSnapshot,
     getServerSnapshot
   );
+  // ReactLenis constructs its Lenis instance inside its own effect (one
+  // render behind ours), so `lenisRef.current.lenis` is still undefined the
+  // instant this component's effect first runs. `useLenis()` reads from the
+  // library's reactive root store instead, so it re-renders once the
+  // instance actually exists.
+  const lenis = useLenis();
 
   useEffect(() => {
     if (prefersReducedMotion) return;
@@ -38,8 +47,15 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
-    return () => gsap.ticker.remove(update);
-  }, [prefersReducedMotion]);
+    // Lenis intercepts native scroll, so ScrollTrigger never sees a scroll
+    // event on its own — nudge it to recompute on every Lenis tick.
+    lenis?.on("scroll", ScrollTrigger.update);
+
+    return () => {
+      gsap.ticker.remove(update);
+      lenis?.off("scroll", ScrollTrigger.update);
+    };
+  }, [prefersReducedMotion, lenis]);
 
   if (prefersReducedMotion) {
     return <>{children}</>;

@@ -9,6 +9,11 @@
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-inout-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast: 180ms;
+  --duration-base: 280ms;
+  --duration-slow: 700ms;
 }
 
 /* `inline` is required here: --font-geist-sans/mono are set at runtime via
@@ -25,11 +30,46 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+/* Default cross-fade for route changes, driven by next-view-transitions.
+   Durations/easing pulled from the tokens above (view-transition pseudo
+   elements can't read CSS vars set on other elements, so the values are
+   duplicated here — keep in sync with @theme and src/lib/motion.ts). */
+::view-transition-old(root) {
+  animation: var(--duration-base) var(--ease-inout-soft) both view-transition-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: var(--duration-base) var(--ease-inout-soft) both view-transition-fade-in;
+}
+
+@keyframes view-transition-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes view-transition-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
   }
 }

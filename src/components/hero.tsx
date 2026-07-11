@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
+import { TransitionLink } from "@/components/transition-link";
 
 gsap.registerPlugin(useGSAP, SplitText);
 
@@ -87,6 +88,12 @@ export function Hero() {
       >
         S0 · deployed day zero · harsh gahlot 2026
       </p>
+      <TransitionLink
+        href="/craft"
+        className="fixed bottom-6 right-6 z-10 font-mono text-xs uppercase tracking-widest text-ink-muted transition-colors duration-base ease-out-expo hover:text-accent"
+      >
+        /craft
+      </TransitionLink>
     </section>
   );
 }
