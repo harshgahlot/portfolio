@@ -40,7 +40,7 @@ export function MagneticButton({
       const mm = gsap.matchMedia();
 
       mm.add(
-        "(hover: hover) and (prefers-reduced-motion: no-preference)",
+        "(any-hover: hover) and (prefers-reduced-motion: no-preference)",
         () => {
           const el = elRef.current;
           const label = labelRef.current;
@@ -48,6 +48,10 @@ export function MagneticButton({
 
           const xTo = gsap.quickTo(el, "x", { duration: 0.4, ease: EASE.out });
           const yTo = gsap.quickTo(el, "y", { duration: 0.4, ease: EASE.out });
+          const scaleTo = gsap.quickTo(label, "scale", {
+            duration: DUR.fast,
+            ease: EASE.out,
+          });
 
           function onPointerMove(e: PointerEvent) {
             const rect = el!.getBoundingClientRect();
@@ -55,7 +59,7 @@ export function MagneticButton({
             const relY = e.clientY - (rect.top + rect.height / 2);
             xTo(relX * strength);
             yTo(relY * strength);
-            gsap.to(label, { scale: 1.05, duration: DUR.fast, ease: EASE.out });
+            scaleTo(1.05);
           }
 
           function onPointerLeave() {
