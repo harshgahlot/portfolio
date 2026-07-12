@@ -1,0 +1,277 @@
+{
+  "model": null,
+  "generatedAt": "2026-07-12T12:26:50.389Z",
+  "chunks": [
+    {
+      "id": "availability",
+      "title": "Opportunities and availability",
+      "tags": [
+        "contact",
+        "opportunities",
+        "roles"
+      ],
+      "text": "I'm always open to good conversations about backend and applied-AI engineering work — especially roles that combine Java/Spring Boot systems with LLM and RAG engineering. If you're hiring or want to discuss a project, email me at harsh09gahlot@gmail.com with a bit about the role or problem, and I'll reply personally. For anything involving specifics — compensation, notice periods, timelines — that's a conversation for me directly, not my AI.",
+      "embedding": null
+    },
+    {
+      "id": "bio-career",
+      "title": "Career timeline",
+      "tags": [
+        "bio",
+        "career",
+        "mindsprint",
+        "promotion"
+      ],
+      "text": "I joined Mindsprint in Chennai as a Junior Software Engineer in July 2024, and in April 2026 I was promoted to Software Engineer with a performance bonus — recognition for consistent delivery and end-to-end ownership of the services I build. Before Mindsprint, I was a Software Engineering Intern at Persistent Systems from July to September 2023, where I built backend components, automation utilities, and internal tools in Java and Python. I graduated in 2024, so the promotion came within my first two years of full-time work.",
+      "embedding": null
+    },
+    {
+      "id": "bio-education",
+      "title": "Education and certifications",
+      "tags": [
+        "bio",
+        "education"
+      ],
+      "text": "I studied Computer Science at Chandigarh University from 2020 to 2024, earning a Bachelor of Engineering (B.E.) with a GPA of 8.02/10. I also hold certifications in Data Structures & Algorithms (Python) and Database Management Systems (DBMS).",
+      "embedding": null
+    },
+    {
+      "id": "bio-metrics",
+      "title": "Scale of Harsh's work",
+      "tags": [
+        "bio",
+        "metrics",
+        "production"
+      ],
+      "text": "The numbers behind my day-to-day work: I've built and shipped 7+ production microservices in Java and Spring Boot, and I design and deliver backend features across a platform of 20+ microservices serving 6,000+ enterprise users on web and mobile. On the delivery side, I drive weekly Jenkins CI/CD deployments to lower environments, with production releases every 1–2 months. These are real, verified numbers — I keep marketing fluff out of them.",
+      "embedding": null
+    },
+    {
+      "id": "bio-overview",
+      "title": "Who Harsh is",
+      "tags": [
+        "bio",
+        "overview"
+      ],
+      "text": "I'm Harsh Gahlot, a Software Engineer at Mindsprint in Chennai, India. My core is backend engineering — Java and Spring Boot microservices running in production — and over the last stretch of my career I've pushed hard into applied AI: retrieval-augmented generation, LangChain, vector search. I like systems that hold up under real usage, whichever layer they live in. This portfolio and the assistant you're talking to are part of that same interest.",
+      "embedding": null
+    },
+    {
+      "id": "boundaries",
+      "title": "What this assistant can and cannot discuss",
+      "tags": [
+        "meta",
+        "boundaries",
+        "scope"
+      ],
+      "text": "I answer questions about Harsh's work: his experience, skills, projects, education, this website, and how to reach him. Things I don't do: share compensation details or other private specifics (email Harsh directly), reveal internal details of his employer's systems beyond what's in his public write-ups, speak for anyone other than Harsh, or answer general questions unrelated to him — I'm not a general-purpose chatbot. If you ask something outside my corpus, I'll say so honestly rather than guess, and point you to harsh09gahlot@gmail.com.",
+      "embedding": null
+    },
+    {
+      "id": "contact",
+      "title": "How to contact Harsh",
+      "tags": [
+        "contact",
+        "email",
+        "linkedin"
+      ],
+      "text": "The best way to reach me is email: harsh09gahlot@gmail.com. I'm also on LinkedIn at linkedin.com/in/h-gahlot and GitHub at github.com/harshgahlot. My resume is available as a PDF right on this site — the download button is in the footer. I'm based in Chennai, India.",
+      "embedding": null
+    },
+    {
+      "id": "faq-positioning",
+      "title": "Why backend plus AI",
+      "tags": [
+        "faq",
+        "positioning",
+        "career"
+      ],
+      "text": "People ask whether I'm a backend engineer or an AI engineer. Both, deliberately: Java and Spring Boot production systems are my foundation — that's where I learned what \"holds up under real usage\" means — and applied AI is where I've pushed over the last year. The combination is the point. RAG systems are mostly backend problems wearing an AI hat: ingestion pipelines, retrieval quality, API design, cost control. My hackathon win and this site's assistant are both that thesis in practice.",
+      "embedding": null
+    },
+    {
+      "id": "faq-strengths",
+      "title": "What Harsh is strongest at",
+      "tags": [
+        "faq",
+        "strengths"
+      ],
+      "text": "My strongest suits, backed by what I've actually shipped: production ownership (7+ microservices built end-to-end, 20+ maintained, with weekly deployment discipline), high-volume data work (real-time GPS ingestion in VLS, PostgreSQL optimization for large datasets), async architectures (Kafka and RabbitMQ integration across distributed services), and applied RAG (a hackathon-winning knowledge assistant, plus the assistant answering you now). I'd rather show verified numbers than adjectives.",
+      "embedding": null
+    },
+    {
+      "id": "hackathon-story",
+      "title": "The hackathon story",
+      "tags": [
+        "projects",
+        "rag",
+        "hackathon",
+        "story"
+      ],
+      "text": "Mindsprint ran a company-wide hackathon — open field, all levels, senior engineering teams included. I went in with a bet on RAG: the most universal problem in any enterprise is that the company already knows the answer to most questions, it just can't find where it wrote it down. I built an end-to-end pipeline — document ingestion, embeddings, vector retrieval, LLM response generation — over semi-structured enterprise datasets, so employees could ask questions in natural language. It took 2nd place against teams of senior engineers, and it set the direction I've been on since.",
+      "embedding": null
+    },
+    {
+      "id": "project-agripal",
+      "title": "AGRIPAL — farm digitization platform",
+      "tags": [
+        "projects",
+        "agripal",
+        "agritech"
+      ],
+      "text": "AGRIPAL is a farm digitization platform. I built backend services delivering weather insights and crop data, integrating third-party APIs for farmer-facing workflows — Java and Spring Boot on the backend with an Angular frontend. A full write-up is on its way; it's listed under Selected Work on the homepage.",
+      "embedding": null
+    },
+    {
+      "id": "project-iraf",
+      "title": "IRAF 2.0 — enterprise backend platform",
+      "tags": [
+        "projects",
+        "iraf",
+        "access-control"
+      ],
+      "text": "IRAF 2.0 is an enterprise backend platform where I built the user-management and access-control modules — REST APIs with audit logging and secure JPA persistence, in Java and Spring Boot on PostgreSQL. A full write-up is coming to the site; the index on the homepage lists it under Selected Work.",
+      "embedding": null
+    },
+    {
+      "id": "project-rag-architecture",
+      "title": "RAG Knowledge Assistant — architecture",
+      "tags": [
+        "projects",
+        "rag",
+        "architecture"
+      ],
+      "text": "The hackathon RAG pipeline splits into an index side and a query side. Index side: ingest and normalize semi-structured enterprise documents, chunk them in a structure-aware way (split blindly and a table row loses its header), embed each chunk, and write it to a vector index. Query side: embed the question into the same vector space, retrieve the top-k closest chunks, assemble a prompt with one standing instruction — answer from this context and only this context — and generate. When retrieval comes back thin, the honest move is \"I don't know.\" LangChain orchestrates the flow.",
+      "embedding": null
+    },
+    {
+      "id": "project-rag-overview",
+      "title": "RAG Knowledge Assistant — the hackathon win",
+      "tags": [
+        "projects",
+        "rag",
+        "hackathon",
+        "award"
+      ],
+      "text": "My proudest project: the RAG Knowledge Assistant, which took 2nd place in Mindsprint's company-wide hackathon — competing against teams of senior engineers. It's an end-to-end retrieval-augmented generation pipeline built with Python, LangChain, and vector search that let employees query internal documents in natural language instead of hunting through them manually. There's a full case study on this site at /work/rag-knowledge-assistant if you want the deep version.",
+      "embedding": null
+    },
+    {
+      "id": "project-rag-why",
+      "title": "Why retrieval instead of fine-tuning",
+      "tags": [
+        "projects",
+        "rag",
+        "design-decisions"
+      ],
+      "text": "People ask why I built the knowledge assistant on retrieval rather than fine-tuning. Fine-tuning bakes knowledge into model weights: expensive to update, impossible to cite. Retrieval keeps the documents as the source of truth — re-index and the assistant is current, and every answer can point back to where it came from. For enterprise knowledge that changes constantly, that's the whole game. The impact: employees could ask questions in natural language, cutting the manual knowledge-lookup effort that motivated the build.",
+      "embedding": null
+    },
+    {
+      "id": "project-vls-architecture",
+      "title": "VLS — the interesting engineering problem",
+      "tags": [
+        "projects",
+        "vls",
+        "architecture",
+        "design-decisions"
+      ],
+      "text": "What makes a vehicle location system interesting: one relentless write pattern, two very different read patterns. The write side never pauses — every active vehicle streams positions all day, and you can't ask a moving truck to resend yesterday. The read side splits: live tracking asks \"where is vehicle X right now\" (a latest-state lookup that must feel instant) while analytics asks \"what did the fleet do over time\" (range scans and aggregation). I designed the read APIs around access patterns rather than the raw table shape — latest-position reads kept cheap and separate from history, historical queries organized by vehicle and time window. The core lesson: design read APIs from the access pattern backwards, not the schema forwards.",
+      "embedding": null
+    },
+    {
+      "id": "project-vls-overview",
+      "title": "Vehicle Location System (VLS)",
+      "tags": [
+        "projects",
+        "vls",
+        "gps",
+        "backend"
+      ],
+      "text": "The Vehicle Location System (VLS) is an enterprise backend I built services for in Java and Spring Boot. Vehicles report GPS positions continuously, and the system ingests that real-time location data at scale, then serves optimized retrieval and analytics APIs on top of it. It's an internal system, so I keep public details at the level I can share — the case study at /work/vehicle-location-system covers the shape of the problem and how I approached it, and I'm happy to go deeper in a conversation.",
+      "embedding": null
+    },
+    {
+      "id": "site-assistant-meta",
+      "title": "How this AI assistant works",
+      "tags": [
+        "site",
+        "assistant",
+        "rag",
+        "meta"
+      ],
+      "text": "You're talking to a RAG pipeline I built into this site. My work history lives as a corpus of hand-written markdown chunks, embedded at build time into a JSON file — no vector database. At query time your question is matched against those chunks (vector similarity when embeddings are live, lexical scoring as a fallback), the top matches go into the prompt as context, and Claude Haiku 4.5 streams the answer through a Next.js route handler using the AI SDK. Rate limiting keeps it affordable. It answers only from my verified work history — the same architecture pattern as my hackathon-winning knowledge assistant, scaled down to one person: me.",
+      "embedding": null
+    },
+    {
+      "id": "site-stack",
+      "title": "How this website is built",
+      "tags": [
+        "site",
+        "stack",
+        "nextjs"
+      ],
+      "text": "This portfolio is built with Next.js 16 (App Router) and Tailwind CSS v4, with motion by GSAP and smooth scrolling by Lenis. Case studies are MDX compiled through Content Collections. It deploys to Vercel — every push to main goes to production. I built it in public as a series of sprints: deploy on day zero, then motion design system, hero, case studies, this assistant, with a blog and launch hardening still to come. The code is on my GitHub at github.com/harshgahlot/portfolio.",
+      "embedding": null
+    },
+    {
+      "id": "skills-ai",
+      "title": "AI and LLM skills",
+      "tags": [
+        "skills",
+        "ai",
+        "rag",
+        "llm"
+      ],
+      "text": "On the applied AI side I work with retrieval-augmented generation (RAG), LangChain, vector search, embeddings, and prompt engineering. This isn't theoretical for me — I built an end-to-end RAG pipeline that took 2nd place in Mindsprint's company-wide hackathon, and the assistant you're talking to right now runs on a RAG architecture I built into this site. I see RAG as a backend engineer's corner of AI: retrieval quality is a data problem, ingestion is plumbing, and serving is APIs.",
+      "embedding": null
+    },
+    {
+      "id": "skills-backend",
+      "title": "Backend skills",
+      "tags": [
+        "skills",
+        "backend",
+        "java",
+        "spring"
+      ],
+      "text": "My backend core: Java is my primary language, with Spring Boot, Spring MVC, Spring Data JPA, and Hibernate as the daily toolkit. I design RESTful APIs and microservices architectures — including robust validation, structured logging, and centralized exception handling across distributed services — and I've worked with J2EE. I also write Python, SQL, JavaScript, and C++. My engineering practices include Agile/Scrum, code reviews, secure API design, and object-oriented design.",
+      "embedding": null
+    },
+    {
+      "id": "skills-data-messaging",
+      "title": "Databases and messaging",
+      "tags": [
+        "skills",
+        "databases",
+        "kafka",
+        "messaging"
+      ],
+      "text": "Databases I work with: PostgreSQL and MySQL primarily, plus Microsoft SQL Server and Oracle. I've optimized PostgreSQL queries and data-access layers for high-volume workloads, improving response times on large datasets. For messaging and async communication I use Apache Kafka, RabbitMQ, and JMS — I've integrated Kafka and RabbitMQ for asynchronous inter-service communication to improve decoupling and throughput across distributed services.",
+      "embedding": null
+    },
+    {
+      "id": "skills-devops",
+      "title": "DevOps and delivery",
+      "tags": [
+        "skills",
+        "devops",
+        "docker",
+        "jenkins"
+      ],
+      "text": "On the delivery side: I containerize services with Docker and maintain Jenkins CI/CD pipelines for repeatable, low-risk deployments. My team ships weekly to lower environments and releases to production every 1–2 months. I use Git daily. On the frontend I have working knowledge of React and Angular — enough to build and integrate against real UIs, though backend is where I live.",
+      "embedding": null
+    },
+    {
+      "id": "work-practices",
+      "title": "How Harsh works day to day",
+      "tags": [
+        "bio",
+        "practices",
+        "agile"
+      ],
+      "text": "Day to day I work in Agile/Scrum — sprint planning, code reviews, and technical documentation with cross-functional teams. I care about secure API design and about services being genuinely operable: robust validation, structured logging, and centralized exception handling are defaults in what I ship, not afterthoughts. Deployment is a weekly rhythm through Jenkins CI/CD to lower environments, with production releases every 1–2 months.",
+      "embedding": null
+    }
+  ]
+}

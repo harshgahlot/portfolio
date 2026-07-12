@@ -6,10 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "embed": "node scripts/embed-corpus.mjs"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.96",
+    "@ai-sdk/react": "^3.0.226",
     "@gsap/react": "^2.1.2",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
+    "ai": "^6.0.224",
     "gsap": "^3.15.0",
     "lenis": "^1.3.25",
     "motion": "^12.42.2",

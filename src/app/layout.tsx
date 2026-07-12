@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ViewTransitions } from "next-view-transitions";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { SiteNav } from "@/components/site-nav";
+import { Assistant } from "@/components/assistant/assistant";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,6 +38,7 @@ export default function RootLayout({
             <SiteNav />
             {children}
           </SmoothScroll>
+          <Assistant />
         </body>
       </html>
     </ViewTransitions>
