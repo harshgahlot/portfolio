@@ -135,7 +135,10 @@ export function Hero() {
           return () => {
             el.removeEventListener("pointermove", onMove);
             el.removeEventListener("pointerleave", onLeave);
-            el.style.removeProperty("--split");
+            // Reset to the resting split. Never removeProperty here — that
+            // would also erase the React-rendered initial value and leave
+            // clip-path/transform with an undefined var() (fully unclipped).
+            el.style.setProperty("--split", "50vw");
           };
         }
       );
@@ -174,7 +177,7 @@ export function Hero() {
           giant name here is a visual duplicate (aria-hidden) — the real,
           accessible heading lives in the base layer above. */}
       <div
-        className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center"
+        className="absolute inset-0 flex flex-col items-center justify-center bg-bg px-6 text-center"
         style={{ clipPath: "inset(0 0 0 var(--split))" }}
       >
         <div ref={topNameRef} aria-hidden="true" className={`${NAME_CLASSES} text-accent`}>
