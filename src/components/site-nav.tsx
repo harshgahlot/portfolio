@@ -75,9 +75,9 @@ export function SiteNav() {
           HG — S2
         </TransitionLink>
         <div className="flex items-center gap-6">
-          <a href="#work" className={LINK_CLASSES}>
+          <TransitionLink href="/#work" className={LINK_CLASSES}>
             work
-          </a>
+          </TransitionLink>
           <TransitionLink href="/craft" className={LINK_CLASSES}>
             craft
           </TransitionLink>

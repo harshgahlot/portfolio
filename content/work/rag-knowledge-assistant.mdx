@@ -1,0 +1,75 @@
+---
+title: RAG Knowledge Assistant
+slug: rag-knowledge-assistant
+kicker: Case study — Applied AI
+summary: An end-to-end RAG pipeline that let employees query internal documents in natural language — 2nd place in Mindsprint's company-wide hackathon.
+type: Hackathon build
+stack:
+  - Python
+  - LangChain
+  - Vector search
+  - Embeddings
+  - LLMs
+award: 2nd place — company-wide hackathon
+order: 1
+draft: false
+---
+
+## Context
+
+Mindsprint ran a company-wide hackathon — open field, all levels, senior engineering teams included. I build Java and Spring Boot microservices for a living, but I'd been pushing hard into applied AI, and this was the place to test that against real competition.
+
+The problem I picked is the most universal one in any enterprise: **the company already knows the answer to most questions — it just can't find where it wrote it down.**
+
+## Problem
+
+Internal knowledge lives in documents and datasets that were never designed to be queried. Most of it is semi-structured at best: meaning lives in tables, sections, and layout as much as in sentences.
+
+Keyword search returns documents; people need answers. Reading through a ranked list of maybe-relevant files *is* the manual lookup effort everyone complains about.
+
+A plain LLM doesn't solve it either. Ask a general-purpose model about internal systems and it will improvise. So grounding was a hard requirement from the start: **every answer had to come from what the documents actually say** — not from the model's imagination.
+
+## Architecture
+
+The pipeline splits into an index side and a query side.
+
+<FlowDiagram
+  lanes={[
+    {
+      label: "Index time",
+      steps: [
+        { title: "Documents", note: "semi-structured sources" },
+        { title: "Chunking", note: "structure-aware splits" },
+        { title: "Embeddings" },
+        { title: "Vector index" },
+      ],
+    },
+    {
+      label: "Query time",
+      steps: [
+        { title: "Question", note: "natural language" },
+        { title: "Retrieve", note: "top-k similar chunks" },
+        { title: "Prompt + context" },
+        { title: "Grounded answer" },
+      ],
+    },
+  ]}
+/>
+
+On the index side, ingestion pulls in the source documents and normalizes them. The design decision that matters most here is **chunking**: split semi-structured content blindly and you shear meaning apart — a table row separated from its header, a clause separated from its section. Chunks have to follow the structure of the data, so that each one still means something on its own. Every chunk is embedded and written to a vector index.
+
+On the query side, the question is embedded into the same vector space, the index returns the closest chunks, and the prompt is assembled from them with one standing instruction: **answer from this context, and only this context.** When retrieval comes back thin, the honest move is "I don't know" — a confident wrong answer costs more trust than no answer. LangChain orchestrates the whole flow.
+
+<Aside label="Why retrieval, not fine-tuning">
+  Fine-tuning bakes knowledge into model weights: expensive to update, impossible to cite. Retrieval keeps the documents as the source of truth — re-index and the assistant is current, and every answer can point back to where it came from. For enterprise knowledge that changes constantly, that's the whole game.
+</Aside>
+
+## Impact
+
+**Second place, company-wide — against teams of senior engineers.**
+
+The assistant let employees ask questions in natural language instead of hunting through documents, cutting the manual knowledge-lookup effort that motivated the build.
+
+It also changed my trajectory. This is the project that made backend + applied AI one lane instead of two separate interests: retrieval quality is a data problem, ingestion is plumbing, serving is APIs — RAG is a backend engineer's corner of AI.
+
+The pattern hasn't left me, either. The AI assistant I'm building into this site runs on the same architecture — embeddings, retrieval, grounded generation.

@@ -9,7 +9,7 @@ import { DUR, EASE, STAGGER } from "@/lib/motion";
 
 gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger);
 
-type MaskedTextTag = "h2" | "h3" | "p";
+type MaskedTextTag = "h1" | "h2" | "h3" | "p";
 type MaskedTextSplit = "lines" | "words";
 
 type MaskedTextProps = {

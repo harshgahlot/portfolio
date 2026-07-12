@@ -12,8 +12,8 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /**
  * "Proof, not adjectives" — eyebrow, headline, the about paragraph, and the
- * four verified metrics as stat tiles. #work anchor lives here until S3 adds
- * real case studies.
+ * four verified metrics as stat tiles. The #work anchor now lives on
+ * WorkIndex (S3), directly below this section.
  */
 export function Proof() {
   const tilesRef = useRef<HTMLDivElement>(null);
@@ -48,10 +48,7 @@ export function Proof() {
   );
 
   return (
-    <section
-      id="work"
-      className="mx-auto max-w-5xl px-6 py-28 sm:px-10 sm:py-36"
-    >
+    <section className="mx-auto max-w-5xl px-6 py-28 sm:px-10 sm:py-36">
       <MaskedText
         as="p"
         type="words"

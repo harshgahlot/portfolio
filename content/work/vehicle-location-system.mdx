@@ -1,0 +1,70 @@
+---
+title: Vehicle Location System
+slug: vehicle-location-system
+kicker: Case study — Backend engineering
+summary: Java/Spring Boot services ingesting real-time GPS location data at scale, with optimized retrieval and analytics APIs on top.
+type: Enterprise backend
+stack:
+  - Java
+  - Spring Boot
+  - REST APIs
+order: 2
+draft: false
+---
+
+## Context
+
+Vehicles in the field report their GPS position continuously. Somewhere, a system has to catch all of it — and turn it into answers: *where is this vehicle right now,* and *where has the fleet been?*
+
+I built backend services for that system — the Vehicle Location System — in Java and Spring Boot: the ingestion path that receives real-time location data at scale, and the REST APIs that serve retrieval and analytics on top of it.
+
+<Aside label="A note on detail">
+  VLS is an internal enterprise system, so this write-up stays at the level I can share publicly — the shape of the problem and how I approached it. Happy to go deeper in conversation.
+</Aside>
+
+## Problem
+
+A location system has an unusual profile: **one relentless write pattern, two very different read patterns.**
+
+The write side never pauses. Every active vehicle is a stream of positions arriving all day, whether or not anyone is looking. Ingestion has to keep accepting data — you can't ask a moving truck to resend yesterday.
+
+The read side splits in two. Live tracking asks *"where is vehicle X right now"* — a single latest-state lookup that needs to feel instant. Analytics asks *"what did the fleet do over time"* — range scans and aggregation across history. A data layout that flatters one of those punishes the other, and both sit on top of the same firehose of writes.
+
+## Architecture
+
+<FlowDiagram
+  lanes={[
+    {
+      label: "Write path",
+      steps: [
+        { title: "GPS feed", note: "continuous positions" },
+        { title: "Ingestion services", note: "validate · persist" },
+        { title: "Location store", note: "organized by vehicle + time" },
+      ],
+    },
+    {
+      label: "Read path",
+      steps: [
+        { title: "Location store" },
+        { title: "Read APIs", note: "latest-state · history" },
+        { title: "Consumers", note: "live tracking · analytics" },
+      ],
+    },
+  ]}
+/>
+
+Ingestion services sit at the front: validate the incoming position stream, persist it, stay out of the way. Write-path code has one job — never become the bottleneck for data you can't ask the sender to resend.
+
+The retrieval and analytics APIs are designed around **access patterns rather than the raw shape of the stored data**. Latest-position reads are kept cheap and separate from history — a live-tracking query should never wait behind an analytics scan. Historical queries are organized by vehicle and time window, because that's how every real question about history arrives: *this vehicle, this period.*
+
+Everything is served over REST, shaped like the questions consumers actually ask rather than the tables underneath.
+
+<Aside label="What I'd say in an interview">
+  The core lesson of VLS: design read APIs from the access pattern backwards, not from the schema forwards. Position history looks like ordinary rows until the volume arrives — then every index, every query shape, every "we'll just scan it" becomes a cost decision. High-volume systems make you honest about what each query costs.
+</Aside>
+
+## Impact
+
+The services expose live position lookups and historical analytics over REST — the *current-state* question and the *what-happened* question, each served by a path built for it.
+
+For me, VLS is where high-volume data thinking became instinct instead of theory: I stopped designing tables and started designing queries. It's the same muscle I use across the platform today — optimizing queries and data-access layers for high-volume workloads.
