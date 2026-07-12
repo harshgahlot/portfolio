@@ -14,6 +14,10 @@ type MagneticButtonProps = {
   className?: string;
   /** How far the button follows the cursor, 0-1. */
   strength?: number;
+  /** Forwarded to the anchor when `href` is set (e.g. resume downloads). */
+  download?: string | boolean;
+  target?: string;
+  rel?: string;
 };
 
 const BASE_CLASSES =
@@ -30,6 +34,9 @@ export function MagneticButton({
   onClick,
   className,
   strength = 0.35,
+  download,
+  target,
+  rel,
 }: MagneticButtonProps) {
   const Component = (href ? "a" : "button") as React.ElementType;
   const elRef = useRef<HTMLElement>(null);
@@ -97,6 +104,9 @@ export function MagneticButton({
       href={href}
       onClick={onClick}
       type={href ? undefined : "button"}
+      download={href ? download : undefined}
+      target={href ? target : undefined}
+      rel={href ? rel : undefined}
       className={`${BASE_CLASSES} ${className ?? ""}`.trim()}
     >
       <span ref={labelRef} className="inline-block will-change-transform">

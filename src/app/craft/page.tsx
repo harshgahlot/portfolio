@@ -56,7 +56,7 @@ const TOKEN_ROWS = [
 
 export default function CraftPage() {
   return (
-    <main className="mx-auto max-w-4xl px-6 pb-32 pt-16 sm:px-10 sm:pt-24">
+    <main className="mx-auto max-w-4xl px-6 pb-32 pt-32 sm:px-10 sm:pt-40">
       <TransitionLink
         href="/"
         className="font-mono text-xs uppercase tracking-widest text-ink-muted transition-colors duration-base ease-out-expo hover:text-accent"
