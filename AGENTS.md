@@ -17,7 +17,7 @@ Full build plan: `C:\Users\Harsh\Desktop\Resume\portfolio-build-plan.html`
 - `motion` package (NOT framer-motion) — import from `"motion/react"`.
 - `lenis` (NOT @studio-freight/*) — provider in `src/components/smooth-scroll.tsx`, driven by gsap.ticker.
 - `next-view-transitions` for page cross-fades — but ONLY in production; dev uses plain next/link (see gotcha below).
-- AI SDK 6 (`ai` / `@ai-sdk/react` / `@ai-sdk/anthropic`, installed via the `ai-v6` dist-tag — see Gotchas) powers the S4 "Ask Harsh's AI" assistant (`src/app/api/ask/route.ts`, `src/components/assistant/*`); `@upstash/ratelimit` + `@upstash/redis` rate-limit it, no-op with a console warning if their env vars are absent.
+- AI SDK 6 (`ai` / `@ai-sdk/react` / `@ai-sdk/google`, installed via the `ai-v6` dist-tag — see Gotchas) powers the S4 "Ask Harsh's AI" assistant (`src/app/api/ask/route.ts`, `src/components/assistant/*`). Chat model: `gemini-3.5-flash` (Google free tier, `GOOGLE_GENERATIVE_AI_API_KEY`, `thinkingLevel: "minimal"`). Embeddings: Voyage `voyage-4-lite` (`VOYAGE_API_KEY`), run by `scripts/embed-corpus.mjs` — which is also the `prebuild` hook, so Vercel re-embeds the corpus on every deploy with its own env vars; keyless machines keep a matching committed corpus.json untouched. `@upstash/ratelimit` + `@upstash/redis` rate-limit it (incl. a 9/min site-wide cap to stay under Gemini's free 10 RPM), no-op with a console warning if env vars are absent.
 
 ## Conventions
 - One motion vocabulary: durations/easings/staggers come from `src/lib/motion.ts` (DUR/EASE/STAGGER) and the matching `@theme` tokens. Never hardcode durations.
@@ -53,5 +53,5 @@ Full build plan: `C:\Users\Harsh\Desktop\Resume\portfolio-build-plan.html`
 ## Workflow
 - `npm run build` AND `npm run lint` must pass before any commit.
 - Commits do not get pushed until the change is verified in a browser; push to `main` auto-deploys to production via Vercel.
-- Sprint status: S0 (scaffold+deploy) ✅ · S1 (motion system + /craft) ✅ · S2 (hero/about/footer/nav) ✅ · S3 (case studies + work index) ✅ · S4 RAG chatbot ("Ask Harsh's AI") ✅ (lexical retrieval verified end-to-end; needs `ANTHROPIC_API_KEY`/`VOYAGE_API_KEY`/Upstash vars set to go fully live) · S5 blog+SEO next · S6 harden/launch.
+- Sprint status: S0 (scaffold+deploy) ✅ · S1 (motion system + /craft) ✅ · S2 (hero/about/footer/nav) ✅ · S3 (case studies + work index) ✅ · S4 RAG chatbot ("Ask Harsh's AI") ✅ — Gemini Flash free tier; Voyage + Upstash env vars are set in Vercel; goes fully live once `GOOGLE_GENERATIVE_AI_API_KEY` is added there · S5 blog+SEO next · S6 harden/launch.
 - Case-study content lives in `content/work/*.mdx` (Content Collections). RAG + VLS are live; `iraf-2-0` and `agripal` are `draft: true` stubs (index rows only, no pages). All case-study copy stays at résumé altitude — elaborate reasoning is fine, new facts/metrics are not.

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { streamText, convertToModelMessages, type UIMessage } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
+import { google } from "@ai-sdk/google";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { retrieve } from "@/lib/assistant/retrieval";
@@ -25,6 +25,7 @@ let redis: Redis | null = null;
 let slidingWindowLimiter: Ratelimit | null = null;
 let dailyIpLimiter: Ratelimit | null = null;
 let dailyGlobalLimiter: Ratelimit | null = null;
+let minuteGlobalLimiter: Ratelimit | null = null;
 
 if (upstashConfigured) {
   redis = new Redis({
@@ -48,6 +49,15 @@ if (upstashConfigured) {
     redis,
     limiter: Ratelimit.fixedWindow(1000, "1 d"),
     prefix: "ask:rl:daily:global",
+  });
+
+  // Gemini's free tier allows ~10 requests/min across the WHOLE key (not
+  // per visitor). Capping ourselves at 9/min site-wide means concurrent
+  // visitors get our friendly 429 line instead of an opaque upstream error.
+  minuteGlobalLimiter = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(9, "60 s"),
+    prefix: "ask:rl:minute:global",
   });
 } else {
   console.warn(
@@ -134,10 +144,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "invalid_request" }, { status: 400 });
     }
 
-    // No Anthropic key: degrade gracefully. In development, also prove out
+    // No Gemini key: degrade gracefully. In development, also prove out
     // retrieval end-to-end (titles of the chunks that would have been used)
     // so the pipeline can be verified with zero API keys.
-    if (!process.env.ANTHROPIC_API_KEY) {
+    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
       if (process.env.NODE_ENV === "development") {
         const retrieved = await retrieve(latestUserText, 5);
         return NextResponse.json(
@@ -148,15 +158,26 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "offline" }, { status: 503 });
     }
 
-    if (slidingWindowLimiter && dailyIpLimiter && dailyGlobalLimiter) {
+    if (
+      slidingWindowLimiter &&
+      dailyIpLimiter &&
+      dailyGlobalLimiter &&
+      minuteGlobalLimiter
+    ) {
       const identifier = getClientIdentifier(req);
-      const [sliding, dailyIp, dailyGlobal] = await Promise.all([
+      const [sliding, dailyIp, dailyGlobal, minuteGlobal] = await Promise.all([
         slidingWindowLimiter.limit(identifier),
         dailyIpLimiter.limit(identifier),
         dailyGlobalLimiter.limit("global"),
+        minuteGlobalLimiter.limit("global"),
       ]);
 
-      if (!sliding.success || !dailyIp.success || !dailyGlobal.success) {
+      if (
+        !sliding.success ||
+        !dailyIp.success ||
+        !dailyGlobal.success ||
+        !minuteGlobal.success
+      ) {
         return NextResponse.json({ error: "rate_limited" }, { status: 429 });
       }
     }
@@ -179,8 +200,13 @@ export async function POST(req: NextRequest) {
     const startedAt = Date.now();
 
     const result = streamText({
-      model: anthropic("claude-haiku-4-5"),
+      model: google("gemini-3.5-flash"),
       maxOutputTokens: 600,
+      providerOptions: {
+        // Grounded Q&A over 5 short chunks needs no deliberation — minimal
+        // thinking keeps first-token latency low on the free tier.
+        google: { thinkingConfig: { thinkingLevel: "minimal" } },
+      },
       system: `${SYSTEM_PROMPT}\n\n<context>\n${contextBlock}\n</context>`,
       messages: await convertToModelMessages(trimmedMessages),
       onFinish: () => {

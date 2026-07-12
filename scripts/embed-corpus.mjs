@@ -118,6 +118,23 @@ async function embedChunks(chunks, apiKey) {
   }));
 }
 
+/**
+ * True when the existing corpus.json on disk was built from exactly the
+ * current markdown chunks (same ids, same text). Used to avoid clobbering
+ * an embedded corpus with a lexical one on keyless machines.
+ */
+async function existingCorpusMatches(chunks) {
+  try {
+    const existing = JSON.parse(await readFile(OUTPUT_PATH, "utf8"));
+    if (!Array.isArray(existing.chunks)) return false;
+    if (existing.chunks.length !== chunks.length) return false;
+    const byId = new Map(existing.chunks.map((c) => [c.id, c.text]));
+    return chunks.every((chunk) => byId.get(chunk.id) === chunk.text);
+  } catch {
+    return false;
+  }
+}
+
 async function main() {
   const chunks = await loadChunks();
   const apiKey = process.env.VOYAGE_API_KEY;
@@ -129,10 +146,30 @@ async function main() {
     console.log(
       `[embed-corpus] Embedding ${chunks.length} chunks with Voyage (${VOYAGE_MODEL})...`
     );
-    embeddedChunks = await embedChunks(chunks, apiKey);
-    model = VOYAGE_MODEL;
-    console.log("[embed-corpus] Embeddings written — vector retrieval is live.");
+    try {
+      embeddedChunks = await embedChunks(chunks, apiKey);
+      model = VOYAGE_MODEL;
+      console.log("[embed-corpus] Embeddings written — vector retrieval is live.");
+    } catch (error) {
+      // This runs as `prebuild` on Vercel: a Voyage outage or bad key must
+      // degrade to lexical retrieval, never fail the deploy.
+      console.warn(
+        "[embed-corpus] Voyage embedding failed — falling back to lexical corpus:",
+        error?.message ?? error
+      );
+      embeddedChunks = chunks.map((chunk) => ({ ...chunk, embedding: null }));
+    }
   } else {
+    // No key on this machine. If the committed corpus.json already reflects
+    // the current markdown (e.g. it was embedded on Vercel or by a teammate),
+    // leave it alone rather than downgrading it to a lexical one.
+    if (await existingCorpusMatches(chunks)) {
+      console.log(
+        "[embed-corpus] no VOYAGE_API_KEY and corpus.json already matches the " +
+          "current chunks — leaving it untouched."
+      );
+      return;
+    }
     embeddedChunks = chunks.map((chunk) => ({ ...chunk, embedding: null }));
     console.log(
       "[embed-corpus] wrote corpus without embeddings — lexical retrieval will be used; " +
