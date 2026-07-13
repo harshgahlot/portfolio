@@ -42,8 +42,19 @@ export async function generateMetadata({
   if (!work) return {};
 
   return {
-    title: `${work.title} — Harsh Gahlot`,
+    title: work.title,
     description: work.summary,
+    openGraph: {
+      title: work.title,
+      description: work.summary,
+      url: work.url,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: work.title,
+      description: work.summary,
+    },
   };
 }
 

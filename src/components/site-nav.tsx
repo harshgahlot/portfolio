@@ -81,6 +81,9 @@ export function SiteNav() {
           <TransitionLink href="/craft" className={LINK_CLASSES}>
             craft
           </TransitionLink>
+          <TransitionLink href="/blog" className={LINK_CLASSES}>
+            blog
+          </TransitionLink>
           <a href={links.resume} download className={LINK_CLASSES}>
             resume
           </a>

@@ -98,9 +98,14 @@ export function SiteFooter() {
 
         <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-surface pt-6 font-mono text-xs uppercase tracking-widest text-ink-muted">
           <p>Built in public · S2 · © 2026 Harsh Gahlot</p>
-          <TransitionLink href="/craft" className={EXTERNAL_LINK_CLASSES}>
-            /craft
-          </TransitionLink>
+          <div className="flex flex-wrap gap-6">
+            <TransitionLink href="/blog" className={EXTERNAL_LINK_CLASSES}>
+              /blog
+            </TransitionLink>
+            <TransitionLink href="/craft" className={EXTERNAL_LINK_CLASSES}>
+              /craft
+            </TransitionLink>
+          </div>
         </div>
       </div>
     </section>

@@ -6,8 +6,22 @@ import { Marquee } from "@/components/primitives/marquee";
 import { Preloader } from "@/components/primitives/preloader";
 import { DUR, EASE, STAGGER } from "@/lib/motion";
 
+const CRAFT_DESCRIPTION =
+  "The motion system behind this site — durations, eases, and stagger from a single source of truth, demoed live with the primitives that build the rest of the pages.";
+
 export const metadata: Metadata = {
-  title: "Craft — Harsh Gahlot",
+  title: "Craft",
+  description: CRAFT_DESCRIPTION,
+  openGraph: {
+    title: "Craft — Harsh Gahlot",
+    description: CRAFT_DESCRIPTION,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Craft — Harsh Gahlot",
+    description: CRAFT_DESCRIPTION,
+  },
 };
 
 function CraftSection({
